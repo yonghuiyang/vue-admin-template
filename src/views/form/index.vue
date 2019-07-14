@@ -1,47 +1,31 @@
 <template>
   <div class="app-container">
     <el-form ref="form" :model="form" label-width="120px">
-      <el-form-item label="Activity name">
-        <el-input v-model="form.name" />
+      <el-form-item label="标题">
+        <el-input v-model="form.title" />
       </el-form-item>
-      <el-form-item label="Activity zone">
-        <el-select v-model="form.region" placeholder="please select your zone">
-          <el-option label="Zone one" value="shanghai" />
-          <el-option label="Zone two" value="beijing" />
+      <el-form-item label="地址">
+        <el-input v-model="form.url" />
+      </el-form-item>
+      <el-form-item label="图片">
+        <el-input v-model="form.pic" />
+      </el-form-item>
+      <el-form-item label="网站">
+        <el-input v-model="form.site" />
+      </el-form-item>
+      <el-form-item label="类别">
+        <el-select v-model="form.channel" placeholder="please select your zone">
+          <el-option label="技术" value="cs" />
+          <el-option label="玩乐" value="fun" />
+          <el-option label="资讯" value="news" />
+          <el-option label="财经" value="finance" />
+          <el-option label="科技" value="tech" />
+          <el-option label="行业" value="industry" />
+          <el-option label="教育" value="education" />
         </el-select>
       </el-form-item>
-      <el-form-item label="Activity time">
-        <el-col :span="11">
-          <el-date-picker v-model="form.date1" type="date" placeholder="Pick a date" style="width: 100%;" />
-        </el-col>
-        <el-col :span="2" class="line">-</el-col>
-        <el-col :span="11">
-          <el-time-picker v-model="form.date2" type="fixed-time" placeholder="Pick a time" style="width: 100%;" />
-        </el-col>
-      </el-form-item>
-      <el-form-item label="Instant delivery">
-        <el-switch v-model="form.delivery" />
-      </el-form-item>
-      <el-form-item label="Activity type">
-        <el-checkbox-group v-model="form.type">
-          <el-checkbox label="Online activities" name="type" />
-          <el-checkbox label="Promotion activities" name="type" />
-          <el-checkbox label="Offline activities" name="type" />
-          <el-checkbox label="Simple brand exposure" name="type" />
-        </el-checkbox-group>
-      </el-form-item>
-      <el-form-item label="Resources">
-        <el-radio-group v-model="form.resource">
-          <el-radio label="Sponsor" />
-          <el-radio label="Venue" />
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item label="Activity form">
-        <el-input v-model="form.desc" type="textarea" />
-      </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">Create</el-button>
-        <el-button @click="onCancel">Cancel</el-button>
+        <el-button type="primary" @click="onSubmit">提交</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -52,25 +36,21 @@ export default {
   data() {
     return {
       form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
+        title: '',
+        url: '',
+        pic: '',
+        site: '',
+        channel: ''
       }
     }
   },
   methods: {
     onSubmit() {
-      this.$message('submit!')
-    },
-    onCancel() {
-      this.$message({
-        message: 'cancel!',
-        type: 'warning'
+      request({
+        url: '/news/add',
+        method: 'get',
+        params: { "title": this.form.title, "url": this.form.url,
+          "pic": this.form.pic, "site": this.form.site, "channel": this.form.channel }
       })
     }
   }
